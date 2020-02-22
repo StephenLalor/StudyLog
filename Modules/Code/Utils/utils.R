@@ -56,7 +56,10 @@ makeTall <- function(df){
   return(df)
 }
 
-revString <- function(string){
-  return(intToUtf8(rev(utf8ToInt(string))))
+getDate <- function(){
+  date <- gsub("-", "/", Sys.Date())
+  year <- substr(date, 1, 4)
+  month <- substr(date, 6, 7)
+  day <- substr(date, 9, 10)
+  return(paste0(day, "/", month, "/", year))
 }
-  

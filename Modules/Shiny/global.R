@@ -28,4 +28,4 @@ logMsg("global", "loading and checking log data")
 main_df <- readLog(paths)
 checkDuplicateEntry(main_df)
 topic_choices <- genChoices(main_df)
-sys_date <- revString(gsub("-", "/", Sys.Date()))
+sys_date <- getDate
