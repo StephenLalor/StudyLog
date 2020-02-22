@@ -29,7 +29,7 @@ ui <- fluidPage(
                          fluidRow(
                            h4("Add New Data"),
                            textInput("time_in", "Time:", placeholder = "00h00m00s"),
-                           textInput("date_in", "Date:", gsub("-", "/", Sys.Date())),
+                           textInput("date_in", "Date:", sys_date),
                            selectInput("topic_in", "Topic:", choices = topic_choices),
                            actionButton("add_time", "Add Time"),
                            hr()

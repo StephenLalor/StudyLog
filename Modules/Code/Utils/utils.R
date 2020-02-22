@@ -55,3 +55,8 @@ makeTall <- function(df){
   df <- df[, c("Variable", "Value")] #Reorder.
   return(df)
 }
+
+revString <- function(string){
+  return(intToUtf8(rev(utf8ToInt(string))))
+}
+  
