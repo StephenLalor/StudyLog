@@ -80,6 +80,12 @@ genChoices <- function(df){
   return(choices_vec)
 }
 
+formatTopic <- function(df){
+  logMsg("function", "running formatTopic()")
+  df$Topic[df$Total == 0] <- "None"
+  return(df)
+}
+
 readTxtLog <- function(txt_log_path){
   logMsg("function", "running readTxtLog()")
   return(read.csv(txt_log_path, header = FALSE))
@@ -97,5 +103,6 @@ prepTxtLog <- function(txt_log_path, paths){
     addDayName() %>%
     addTotalDur() %>%
     prepCols() %>%
+    formatTopic() %>%
     saveLog(paths)
 }

@@ -57,4 +57,5 @@ archiveLog <- function(paths){
 saveLog <- function(df, paths){
   logMsg("function", "running saveLog()")
   saveRDS(df, paste0(paths$Data, "StudyLog.rds"))
+  return(df)
 }
