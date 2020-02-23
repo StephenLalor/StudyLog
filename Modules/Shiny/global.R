@@ -4,17 +4,6 @@
 
 #========== SetUp ==========#
 
-#Library:
-logMsg("global", "loading packages")
-library(dplyr)
-library(crayon)
-library(shinyWidgets)
-library(stringr)
-library(lubridate)
-library(plotly)
-library(data.table)
-library(DT)
-
 #Options:
 logMsg("global", "setting options")
 options(stringsAsFactors = FALSE)

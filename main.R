@@ -1,4 +1,5 @@
 #========== Run App ==========#
+library(dplyr)
 library(shiny)
 source(paste0(getwd(), "/Modules/Code/Utils/utils.R"))
 paths <- defPaths()
