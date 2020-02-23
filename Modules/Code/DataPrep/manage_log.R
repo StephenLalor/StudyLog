@@ -12,11 +12,13 @@ validateDate <- function(date){
   ### Check given date is valid. ###
   logMsg("function", "running validateDate()")
   nchar_chk <- nchar(date) == 10
-  slash_chk <- (substr(date, 5, 5) == "/") & (substr(date, 8, 8) == "/")
+  slash_chk <- (substr(date, 3, 3) == "/") & (substr(date, 6, 6) == "/")
   digits_chk <- grepl("^[[:digit:]]+$", gsub("/", "", date)) #All numeric, except slashes.
   if(!all(nchar_chk, slash_chk, digits_chk)){
-    stop("Invalid Date.")
+    warning("Invalid Date")
+    return(FALSE)
   }
+  return(TRUE)
 }
 
 updateLog <- function(df, dur, date, topic){
@@ -24,7 +26,7 @@ updateLog <- function(df, dur, date, topic){
   
   #Set up new line:
   new_df <- data.frame("Duration" = dur, "Date" = date, "Topic" = topic)
-  new_df$Date <- lubridate::ymd(new_df$Date)
+  new_df$Date <- lubridate::dmy(new_df$Date)
   new_df <- new_df %>%
     parseTime() %>%
     cleanNA() %>%
@@ -32,21 +34,14 @@ updateLog <- function(df, dur, date, topic){
     addDayName() %>%
     addTotalDur() %>%
     prepCols()
-  
-  #Check not overwriting date:
-  if(!(new_df$Date %in% df$Date)){
-    df <- rbind(df, new_df)
-  } else{
-    warning("Date for this entry already exists. Not adding.")
-  }
-  
+
   #Add to existing data:
-  return(df)
+  return(rbind(df, new_df))
 }
   
 delDate <- function(df, date){
   logMsg("function", "running delDate()")
-  return(df[df$Date != lubridate::dmy(date), ])
+  return(df[df$Date != date, ])
 }
 
 archiveLog <- function(paths){
