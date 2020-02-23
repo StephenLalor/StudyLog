@@ -7,9 +7,11 @@ server <- function(input, output){
   #========== Input ==========#
   observeEvent(input$add_time, {
     logMsg("input", "add_time clicked")
-    validateDate(input$date_in) #Check input date.
+    valid_date <- validateDate(input$date_in) #Check input date.
+    if(!valid_date) return() #Break from function.
     archiveLog(paths) #More current version to archive.
-    main_df <- updateLog(main_df, input$time_in, input$date_in, input$topic_in) #Add new line to log.
+    topic <- getTopic(input$new_topic_in, input$topic_in) #Use selected topic.
+    main_df <- updateLog(main_df, input$time_in, input$date_in, topic) #Add new line to log.
     saveLog(main_df, paths) #Save now updated log.
   })
   
