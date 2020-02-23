@@ -85,3 +85,7 @@ overviewPlot <- function(plot_df, date_var){
   return(plt)
   
 }
+
+overViewTab <- function(df){
+  return(data.table::as.data.table(df))
+}

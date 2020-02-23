@@ -20,11 +20,17 @@ server <- function(input, output){
     prepTxtLog(input$old_log_path, paths)
   })
   
-  #========== Plot ==========#
+  #========== Overview ==========#
   output$overview_plot <- plotly::renderPlotly({
     logMsg("plot", "rendering overview plot")
     plot_df <- overviewPlotData(main_df, input$sel_time, 20)
     return(overviewPlot(plot_df, input$sel_time))
+  })
+  
+  output$overview_tab <- DT::renderDataTable({
+    tab <- overViewTab(main_df)
+    options = list(info = FALSE)
+    return(DT::datatable(tab, options, rownames = FALSE))
   })
   
   #========== Stats ==========#

@@ -57,6 +57,12 @@ ui <- fluidPage(
                            plotlyOutput("overview_plot"),
                            br(),
                            hr()
+                         ),
+                         
+                         #Overview tab row:
+                         fluidRow(
+                           h4("Dataset"),
+                           dataTableOutput("overview_tab")
                          )
                 ),
                 
