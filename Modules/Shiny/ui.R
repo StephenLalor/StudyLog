@@ -30,7 +30,9 @@ ui <- fluidPage(
                            h4("Add New Data"),
                            textInput("time_in", "Time:", placeholder = "00h00m00s"),
                            textInput("date_in", "Date:", sys_date),
-                           selectInput("topic_in", "Topic:", choices = topic_choices),
+                           checkboxInput("new_topic_toggle", label = "Add new topic"),
+                           conditionalPanel("!input.new_topic_toggle", selectInput("topic_in", "Topic:", choices = topic_choices)),
+                           conditionalPanel("input.new_topic_toggle", textInput("new_topic_in", "New Topic:")),
                            actionButton("add_time", "Add Time"),
                            hr()
                          ),
