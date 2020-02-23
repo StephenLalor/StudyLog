@@ -37,6 +37,7 @@ cleanNA <- function(df){
   df$Hours[is.na(df$Hours)] <- 0
   df$Mins[is.na(df$Mins)] <- 0
   df$Seconds[is.na(df$Seconds)] <- 0
+  df$Topic[is.na(df$Topic)] <- 0
   return(df)
 }
 
