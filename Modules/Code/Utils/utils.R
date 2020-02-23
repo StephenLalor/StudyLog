@@ -63,3 +63,7 @@ getDate <- function(){
   day <- substr(date, 9, 10)
   return(paste0(day, "/", month, "/", year))
 }
+
+getTopic <- function(new_topic_in, topic_in){
+  if(new_topic_in != "") return(new_topic_in) else return(topic_in)
+}
