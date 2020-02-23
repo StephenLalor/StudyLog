@@ -60,6 +60,7 @@ ui <- fluidPage(
                          ),
                          
                          #Overview tab row:
+                         br(), br(), br(), br(), br(), br(), br(), br(), #Spacing for large plot above - quickfix.
                          fluidRow(
                            h4("Dataset"),
                            dataTableOutput("overview_tab")
