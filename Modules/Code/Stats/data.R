@@ -11,6 +11,17 @@ allTimeTotal <- function(df){
 windowSubset <- function(df, slider_range){
   ### Subset df for given range. ###
   logMsg("function", "running windowSubset()")
+  
+  #Deal with duplicate date entries:
+  cond_dupe <- duplicated(df$Date)
+  dupe_dates <- df$Date[cond_dupe]
+  for(curr_date in dupe_dates){
+    cond_date <- df$Date == curr_date
+    df$Total[cond_date] <- sum(df$Total[cond_date]) #Sum all study time.
+  }
+  df <- df[!cond_dupe, ]
+  
+  #Subset:
   time_range <- c(0, 0)
   time_range[1] <- which(df$Date == slider_range[1])
   time_range[2] <- which(df$Date == slider_range[2])

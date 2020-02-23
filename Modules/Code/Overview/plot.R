@@ -28,6 +28,15 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   if(date_var == "Week") target <- target
   if(date_var == "Month") target <- target*4
   df$Target <- target #Only single value needed but passing here to avoid more args to overviewPlot.
+  
+  #Deal with duplicate date entries:
+  cond_dupe <- duplicated(df$YearDate)
+  dupe_dates <- df$YearDate[cond_dupe]
+  for(curr_date in dupe_dates){
+    cond_date <- df$YearDate == curr_date
+    df$DateTotal[cond_date] <- sum(df$DateTotal[cond_date]) #Sum all study time.
+  }
+  df <- df[!cond_dupe, ]
 
   #Create colors:
   df$Color <- "rgba(204, 204, 204, 1)"
