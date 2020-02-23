@@ -2,11 +2,7 @@
 ####                    Stats Data
 #======================================================================#
 
-allTimeTotal <- function(df){
-  ### Calculate total time. ###
-  logMsg("function", "running allTimeTotal()")
-  return(sum(df$Total))
-}
+#========== Divide Data ==========#
 
 windowSubset <- function(df, slider_range){
   ### Subset df for given range. ###
@@ -28,6 +24,14 @@ windowSubset <- function(df, slider_range){
   return(df[time_range[1]:time_range[2], ])
 }
 
+#========== Basic Stats ==========#
+
+allTimeTotal <- function(df){
+  ### Calculate total time. ###
+  logMsg("function", "running allTimeTotal()")
+  return(sum(df$Total))
+}
+
 slidingAvgs <- function(window_df){
   ### Calculate averages over sliding window. ###
   logMsg("function", "running slidingAvgs()")
@@ -38,6 +42,8 @@ slidingAvgs <- function(window_df){
   
   return(df)
 }
+
+#========== Bests And Worsts ==========#
 
 bestWorstDays <- function(window_df){
   ### Calculate best and worst day totals. ###

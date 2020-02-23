@@ -2,6 +2,8 @@
 ####                    OVERVIEW 
 #======================================================================#
 
+#========== Plot ==========#
+
 overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   logMsg("function", "running overviewPlotData()")
   
@@ -85,6 +87,8 @@ overviewPlot <- function(plot_df, date_var){
   return(plt)
   
 }
+
+#========== Table ==========#
 
 overViewTab <- function(df){
   return(data.table::as.data.table(df))

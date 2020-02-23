@@ -2,6 +2,8 @@
 ####                    Stats Plots
 #======================================================================#
 
+#========== Pie Plot ==========#
+
 zeroPiePlot <- function(df){
   logMsg("function", "running zeroPiePlot()")
   

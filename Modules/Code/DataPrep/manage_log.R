@@ -2,23 +2,12 @@
 ####                    Manage Log 
 #======================================================================#
 
+#========== Log Manipulation ==========#
+
 readLog <- function(paths){
   logMsg("function", "running readLog()")
   df <- readRDS(paste0(paths$Data, "StudyLog.rds"))
   return(df)
-}
-
-validateDate <- function(date){
-  ### Check given date is valid. ###
-  logMsg("function", "running validateDate()")
-  nchar_chk <- nchar(date) == 10
-  slash_chk <- (substr(date, 3, 3) == "/") & (substr(date, 6, 6) == "/")
-  digits_chk <- grepl("^[[:digit:]]+$", gsub("/", "", date)) #All numeric, except slashes.
-  if(!all(nchar_chk, slash_chk, digits_chk)){
-    warning("Invalid Date")
-    return(FALSE)
-  }
-  return(TRUE)
 }
 
 updateLog <- function(df, dur, date, topic){
@@ -38,11 +27,6 @@ updateLog <- function(df, dur, date, topic){
   #Add to existing data:
   return(rbind(df, new_df))
 }
-  
-delDate <- function(df, date){
-  logMsg("function", "running delDate()")
-  return(df[df$Date != date, ])
-}
 
 archiveLog <- function(paths){
   logMsg("function", "running archiveLog()")
@@ -58,4 +42,24 @@ saveLog <- function(df, paths){
   logMsg("function", "running saveLog()")
   saveRDS(df, paste0(paths$Data, "StudyLog.rds"))
   return(df)
+}
+
+delDate <- function(df, date){
+  logMsg("function", "running delDate()")
+  return(df[df$Date != date, ])
+}
+
+#========== Other ==========#
+
+validateDate <- function(date){
+  ### Check given date is valid. ###
+  logMsg("function", "running validateDate()")
+  nchar_chk <- nchar(date) == 10
+  slash_chk <- (substr(date, 3, 3) == "/") & (substr(date, 6, 6) == "/")
+  digits_chk <- grepl("^[[:digit:]]+$", gsub("/", "", date)) #All numeric, except slashes.
+  if(!all(nchar_chk, slash_chk, digits_chk)){
+    warning("Invalid Date")
+    return(FALSE)
+  }
+  return(TRUE)
 }

@@ -2,6 +2,8 @@
 ####                    Utils 
 #======================================================================#
 
+#========== General Project Utilities ==========#
+
 logMsg <- function(loc, msg, timestamp){
   if(missing(timestamp)) timestamp <- TRUE
   timestamp <- crayon::yellow(paste0("@ ",Sys.time()))
@@ -33,6 +35,16 @@ defPaths <- function(){
   return(lst)
 }
 
+getDate <- function(){
+  date <- gsub("-", "/", Sys.Date())
+  year <- substr(date, 1, 4)
+  month <- substr(date, 6, 7)
+  day <- substr(date, 9, 10)
+  return(paste0(day, "/", month, "/", year))
+}
+
+#========== Manipulation ==========#
+
 checkDuplicateEntry <- function(df){
   logMsg("function", "running checkDuplicateEntry()")
   dupe_bool <- duplicated(df$Date)
@@ -56,14 +68,18 @@ makeTall <- function(df){
   return(df)
 }
 
-getDate <- function(){
-  date <- gsub("-", "/", Sys.Date())
-  year <- substr(date, 1, 4)
-  month <- substr(date, 6, 7)
-  day <- substr(date, 9, 10)
-  return(paste0(day, "/", month, "/", year))
-}
+#========== Shiny ==========#
 
 getTopic <- function(new_topic_in, topic_in){
   if(new_topic_in != "") return(new_topic_in) else return(topic_in)
+}
+
+genChoices <- function(df){
+  logMsg("function", "running genChoices()")
+  choices_vec <- c("Data Structures and Algorithms", #Premade choices.
+                   "Machine Learning",
+                   "Statistics & Probability")
+  choices_vec <- c(choices_vec, unique(df$Topic)) #All existing choices.
+  choices_vec <- choices_vec[!is.na(choices_vec)] #Remove all NAs.
+  return(choices_vec)
 }

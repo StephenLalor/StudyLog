@@ -2,6 +2,8 @@
 ####                    Data Prep 
 #======================================================================#
 
+#========== Basic Formatting ==========#
+
 renameCols <- function(df){
   logMsg("function", "running renameCols()")
   names(df) <- c("Duration", "Date", "Topic")
@@ -41,6 +43,8 @@ cleanNA <- function(df){
   return(df)
 }
 
+#========== Add Cols ==========#
+
 addWeekNum <- function(df){
   logMsg("function", "running addWeekNum()")
   df$Week <- strftime(df$Date, format = "%V")
@@ -59,6 +63,8 @@ addTotalDur <- function(df){
   return(df)
 }
 
+#========== Format Cols ==========#
+
 prepCols <- function(df){
   logMsg("function", "running prepCols()")
   df <- df[, c("Date", "Week", "Day", "Total", "Topic")]
@@ -70,21 +76,13 @@ prepCols <- function(df){
   return(df)
 }
 
-genChoices <- function(df){
-  logMsg("function", "running genChoices()")
-  choices_vec <- c("Data Structures and Algorithms", #Premade choices.
-                   "Machine Learning",
-                   "Statistics & Probability")
-  choices_vec <- c(choices_vec, unique(df$Topic)) #All existing choices.
-  choices_vec <- choices_vec[!is.na(choices_vec)] #Remove all NAs.
-  return(choices_vec)
-}
-
 formatTopic <- function(df){
   logMsg("function", "running formatTopic()")
   df$Topic[df$Total == 0] <- "None"
   return(df)
 }
+
+#========== Prep Pipeline ==========#
 
 readTxtLog <- function(txt_log_path){
   logMsg("function", "running readTxtLog()")

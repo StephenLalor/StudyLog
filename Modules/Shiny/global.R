@@ -12,6 +12,8 @@ options(stringsAsFactors = FALSE)
 logMsg("global", "loading scripts")
 loadScripts(paths$Code)
 
+#========== Data ==========#
+
 #Prepare data:
 logMsg("global", "loading and checking log data")
 main_df <- readLog(paths)
