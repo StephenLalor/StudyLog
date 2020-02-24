@@ -5,6 +5,13 @@
 #========== Plot ==========#
 
 overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
+  #' Overview Plot
+  #' 
+  #' Create data used by overviewPlot().
+  #' @param df data.frame
+  #' @param date_var character vec
+  #' @param target numeric
+  #' @return data.frame
   logMsg("function", "running overviewPlotData()")
   
   #Collect by YearDate:
@@ -39,19 +46,24 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
     df$DateTotal[cond_date] <- sum(df$DateTotal[cond_date]) #Sum all study time.
   }
   df <- df[!cond_dupe, ]
-
+  
   #Create colors:
   df$Color <- "rgba(204, 204, 204, 1)"
   df$Color[c(TRUE, FALSE)] <- "rgba(160, 255, 153, 1)" #Alternating colors.
   df$BorderColor <- "rgba(0, 0, 0, 0.5)"
-
+  
   #Return DF:
   return(df)
   
 }
 
 overviewPlot <- function(plot_df, date_var){
-  ### Plot overview of hours. ###
+  #' Overview Plot
+  #' 
+  #' Create overview bar plot.
+  #' @param plot_df data.frame
+  #' @param date_var character vec
+  #' @return plotly htmlwidget
   logMsg("function", "running overviewPlot()")
   
   #Define bar styling:
@@ -70,10 +82,10 @@ overviewPlot <- function(plot_df, date_var){
   
   #Add line:
   plt <- plt %>%
-    add_segments(x = min(plot_df$YearDate), xend = max(plot_df$YearDate),
-                 y = plot_df$Target[1], yend = plot_df$Target[1],
-                 name = "Target",
-                 line = list(color = "rgba(0, 0, 0, 0.5)", dash = "dash"))
+    plotly::add_segments(x = min(plot_df$YearDate), xend = max(plot_df$YearDate),
+                         y = plot_df$Target[1], yend = plot_df$Target[1],
+                         name = "Target",
+                         line = list(color = "rgba(0, 0, 0, 0.5)", dash = "dash"))
   
   #Add layout:
   yaxis_layout = list(title = "Hours")
@@ -91,5 +103,10 @@ overviewPlot <- function(plot_df, date_var){
 #========== Table ==========#
 
 overViewTab <- function(df){
+  #' Overview Table
+  #' 
+  #' Create table of main data.
+  #' @param df data.frame
+  #' @return data.table data.frame
   return(data.table::as.data.table(df))
 }

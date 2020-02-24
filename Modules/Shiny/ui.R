@@ -54,7 +54,7 @@ ui <- fluidPage(
                          #Overview plot row:
                          fluidRow(
                            h4("Study Time"),
-                           plotlyOutput("overview_plot"),
+                           plotly::plotlyOutput("overview_plot"),
                            br(),
                            hr()
                          ),
@@ -63,7 +63,7 @@ ui <- fluidPage(
                          br(), br(), br(), br(), br(), br(), br(), br(), #Spacing for large plot above - quickfix.
                          fluidRow(
                            h4("Dataset"),
-                           dataTableOutput("overview_tab")
+                           DT::dataTableOutput("overview_tab")
                          )
                 ),
                 
@@ -84,9 +84,9 @@ ui <- fluidPage(
                          
                          #Good and bad section:
                          fluidRow(
-                           column(3, style = "padding:20px;", h4("The Good and Bad"), dataTableOutput("good_bad")),
-                           column(3, style = "padding:20px;", h4("Averages"), dataTableOutput("sliding_avg")),
-                           column(3, style = "padding:20px;", plotlyOutput("zero_pie_plot"))
+                           column(3, style = "padding:20px;", h4("The Good and Bad"), DT::dataTableOutput("good_bad")),
+                           column(3, style = "padding:20px;", h4("Averages"), DT::dataTableOutput("sliding_avg")),
+                           column(3, style = "padding:20px;", plotly::plotlyOutput("zero_pie_plot"))
                          )
 
                 )

@@ -5,6 +5,11 @@
 #========== Pie Plot ==========#
 
 zeroPiePlot <- function(df){
+  #' Bests And Worsts
+  #' 
+  #' Calculate best and worst week records.
+  #' @param df data.frame
+  #' @return plotly htmlwidget
   logMsg("function", "running zeroPiePlot()")
   
   #Plot setup:

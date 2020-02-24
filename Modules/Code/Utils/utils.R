@@ -5,27 +5,42 @@
 #========== General Project Utilities ==========#
 
 logMsg <- function(loc, msg, timestamp){
+  #' General Project Utilities
+  #' 
+  #' Concatenate a line to console with colouring and timestamp.
+  #' @param loc character vec
+  #' @param msg character vec
+  #' @param timestamp bool - defaults to TRUE
+  #' @return void
   if(missing(timestamp)) timestamp <- TRUE
-  timestamp <- crayon::yellow(paste0("@ ",Sys.time()))
+  timestamp <- crayon::yellow(paste0("@ ", Sys.time()))
   loc_form <- crayon::blue(paste0("LOG - ", toupper(loc), ":"))
   cat(paste(loc_form, msg, timestamp), "\n")
 }
 
 loadScripts <- function(dir_path){
-  ### Load all scripts in folder. ###
+  #' General Project Utilities
+  #' 
+  #' Load all R scripts in specified folder.
+  #' @param dir_path character vec
+  #' @return void
   logMsg("function", "running loadScripts()")
 
   #Loop through and source all:
   script_list <- list.files(dir_path, ".R", recursive = TRUE, full.names = TRUE)
-  cat(underline("From:", dir_path, "\n"))
+  cat(crayon::underline("From:", dir_path, "\n"))
   for(i in 1:length(script_list)){
     curr_script <- script_list[i]
-    cat("\t", yellow("Sourcing script:"), bold(basename(curr_script)), "\n")
+    cat("\t", crayon::yellow("Sourcing script:"), crayon::bold(basename(curr_script)), "\n")
     source(curr_script)
   }
 }
 
 defPaths <- function(){
+  #' General Project Utilities
+  #' 
+  #' Storage list of useful paths for app.
+  #' @return list
   logMsg("function", "running defPaths()")
   lst <- list()
   lst$Base <- paste0(getwd(), "/")
@@ -36,6 +51,10 @@ defPaths <- function(){
 }
 
 getDate <- function(){
+  #' General Project Utilities
+  #' 
+  #' Return date properly formatted for use in app.
+  #' @return character vec
   date <- gsub("-", "/", Sys.Date())
   year <- substr(date, 1, 4)
   month <- substr(date, 6, 7)
@@ -46,6 +65,11 @@ getDate <- function(){
 #========== Manipulation ==========#
 
 checkDuplicateEntry <- function(df){
+  #' Manipulation
+  #' 
+  #' Check if DF has duplicate date entries, print details of them if so.
+  #' @param df data.frame
+  #' @return void
   logMsg("function", "running checkDuplicateEntry()")
   dupe_bool <- duplicated(df$Date)
   if(sum(dupe_bool) > 0){
@@ -58,7 +82,11 @@ checkDuplicateEntry <- function(df){
 }
 
 makeTall <- function(df){
-  ### Trandform DF to tall version. ###
+  #' Manipulation
+  #' 
+  #' Transform DF to tall format, as opposed to wide.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running makeTall()")
   df <- t(df) %>% as.data.frame() #Transform to tall.
   df$Variable <- rownames(df)
@@ -71,10 +99,21 @@ makeTall <- function(df){
 #========== Shiny ==========#
 
 getTopic <- function(new_topic_in, topic_in){
+  #' Shiny Utils
+  #' 
+  #' Return whichever object user chose to enter in topic selection.
+  #' @param new_topic_in character vec
+  #' @param topic_in character vec
+  #' @return character vec
   if(new_topic_in != "") return(new_topic_in) else return(topic_in)
 }
 
 genChoices <- function(df){
+  #' Shiny Utils
+  #' 
+  #' Create vector of topic choices to fill UI element.
+  #' @param df data.frame
+  #' @return character vec
   logMsg("function", "running genChoices()")
   choices_vec <- c("Data Structures and Algorithms", #Premade choices.
                    "Machine Learning",

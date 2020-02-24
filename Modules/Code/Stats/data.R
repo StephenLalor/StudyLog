@@ -5,7 +5,12 @@
 #========== Divide Data ==========#
 
 windowSubset <- function(df, slider_range){
-  ### Subset df for given range. ###
+  #' Divide Data
+  #' 
+  #' Create overview bar plot.
+  #' @param df data.frame
+  #' @param slider_range character vec
+  #' @return plotly htmlwidget
   logMsg("function", "running windowSubset()")
   
   #Deal with duplicate date entries:
@@ -27,13 +32,21 @@ windowSubset <- function(df, slider_range){
 #========== Basic Stats ==========#
 
 allTimeTotal <- function(df){
-  ### Calculate total time. ###
+  #' Basic Stats
+  #' 
+  #' Calculate all time total study time.
+  #' @param df data.frame
+  #' @return numeric
   logMsg("function", "running allTimeTotal()")
   return(sum(df$Total))
 }
 
 slidingAvgs <- function(window_df){
-  ### Calculate averages over sliding window. ###
+  #' Basic Stats
+  #' 
+  #' Calculate sliding averages.
+  #' @param window_df data.frame
+  #' @return data.frame
   logMsg("function", "running slidingAvgs()")
   cond_weekend <- window_df$Day %in% c("Sat", "Sun")
   df <- data.frame(WindowAvg = mean(window_df$Total) %>% round(2),
@@ -46,7 +59,11 @@ slidingAvgs <- function(window_df){
 #========== Bests And Worsts ==========#
 
 bestWorstDays <- function(window_df){
-  ### Calculate best and worst day totals. ###
+  #' Bests And Worsts
+  #' 
+  #' Calculate best and worst day records.
+  #' @param window_df data.frame
+  #' @return data.frame
   logMsg("function", "running bestWorstDays()")
   
   #Define conditions:
@@ -67,7 +84,11 @@ bestWorstDays <- function(window_df){
 }
 
 bestWorstWeeks <- function(window_df){
-  ### Calculate best and worst week totals. ###
+  #' Bests And Worsts
+  #' 
+  #' Calculate best and worst week records.
+  #' @param window_df data.frame
+  #' @return data.frame
   logMsg("function", "running bestWorstWeeks()")
   
   #Group DF:
@@ -91,7 +112,11 @@ bestWorstWeeks <- function(window_df){
 }
 
 bestWorstMonths <- function(window_df){
-  ### Calculate best and worst week totals. ###
+  #' Bests And Worsts
+  #' 
+  #' Calculate best and worst month records.
+  #' @param window_df data.frame
+  #' @return data.frame
   logMsg("function", "running bestWorstMonths()")
   
   #Group DF:

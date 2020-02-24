@@ -5,12 +5,22 @@
 #========== Basic Formatting ==========#
 
 renameCols <- function(df){
+  #' Basic Formatting
+  #' 
+  #' Rename columns names to meaningful ones.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running renameCols()")
   names(df) <- c("Duration", "Date", "Topic")
   return(df)
 }
 
 parseTime <- function(df){
+  #' Basic Formatting
+  #' 
+  #' Parse 00h00m00s format time and create more useful individual columns.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running parseTime()")
   df$Duration <- as.character(df$Duration)
   df$Duration <- gsub("(s).*", "\\1", df$Duration) #Remove all after seconds.
@@ -24,16 +34,26 @@ parseTime <- function(df){
 }
 
 fillDays <- function(df){
+  #' Basic Formatting
+  #' 
+  #' Add all missing days between days already logged.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running fillDays()")
   df$Date <- lubridate::dmy(df$Date)
-  num_days <- lubridate::interval(min(df$Date), max(df$Date))/days(1)
-  date_seq <- min(df$Date) + days(0:num_days)
+  num_days <- lubridate::interval(min(df$Date), max(df$Date))/lubridate::days(1)
+  date_seq <- min(df$Date) + lubridate::days(0:num_days)
   full_df <- data.frame("Date" = date_seq)
   full_df <- full_df %>% dplyr::left_join(df, by = "Date")
   return(full_df)
 }
 
 cleanNA <- function(df){
+  #' Basic Formatting
+  #' 
+  #' Replace NA instances of variables with substitute.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running cleanNA()")
   df$Duration[is.na(df$Duration)] <- 0
   df$Hours[is.na(df$Hours)] <- 0
@@ -46,18 +66,33 @@ cleanNA <- function(df){
 #========== Add Cols ==========#
 
 addWeekNum <- function(df){
+  #' Add Cols
+  #' 
+  #' Add week number (1-52) to DF.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running addWeekNum()")
   df$Week <- strftime(df$Date, format = "%V")
   return(df)
 }
 
 addDayName <- function(df){
+  #' Add Cols
+  #' 
+  #' Add day name (e.g. Tuesday) to DF.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running addDayName()")
   df$Day <- lubridate::wday(df$Date, label = TRUE)
   return(df)
 }
 
 addTotalDur <- function(df){
+  #' Add Cols
+  #' 
+  #' Add total study duration in hours to DF.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running addTotalDur()")
   df$Total <- round(df$Hours + (1/60)*df$Mins + (1/(60^2))*df$Seconds, 2)
   return(df)
@@ -66,6 +101,11 @@ addTotalDur <- function(df){
 #========== Format Cols ==========#
 
 prepCols <- function(df){
+  #' Format Cols
+  #' 
+  #' Select reorder and set class of each col.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running prepCols()")
   df <- df[, c("Date", "Week", "Day", "Total", "Topic")]
   df$Date <- as.character(df$Date)
@@ -77,6 +117,11 @@ prepCols <- function(df){
 }
 
 formatTopic <- function(df){
+  #' Format Cols
+  #' 
+  #' Replace Topic col with "None" for days with 0 Total.
+  #' @param df data.frame
+  #' @return data.frame
   logMsg("function", "running formatTopic()")
   df$Topic[df$Total == 0] <- "None"
   return(df)
@@ -85,11 +130,22 @@ formatTopic <- function(df){
 #========== Prep Pipeline ==========#
 
 readTxtLog <- function(txt_log_path){
+  #' Prep Pipeline
+  #' 
+  #' Read text study log.
+  #' @param txt_log_path character vector
+  #' @return data.frame
   logMsg("function", "running readTxtLog()")
-  return(read.csv(txt_log_path, header = FALSE))
+  return(utils::read.csv(txt_log_path, header = FALSE))
 }
 
 prepTxtLog <- function(txt_log_path, paths){
+  #' Prep Pipeline
+  #' 
+  #' Full text log prep pipeline. Reads, prepares and then saves in Data folder.
+  #' @param txt_log_path character vector
+  #' @param paths list
+  #' @return void
   logMsg("function", "running prepTxtLog()")
   txt_log_path <-  gsub("\\\\", "/", txt_log_path)
   main_df <- readTxtLog(txt_log_path) %>%
