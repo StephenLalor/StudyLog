@@ -115,9 +115,9 @@ genChoices <- function(df){
   #' @param df data.frame
   #' @return character vec
   logMsg("function", "running genChoices()")
-  choices_vec <- c("Data Structures and Algorithms", #Premade choices.
-                   "Machine Learning",
-                   "Statistics & Probability")
+  choices_vec <- c("DSA", #Premade choices.
+                   "ML",
+                   "Stats & Prob")
   choices_vec <- c(choices_vec, unique(df$Topic)) #All existing choices.
   choices_vec <- choices_vec[!is.na(choices_vec)] #Remove all NAs.
   return(choices_vec)
