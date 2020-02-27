@@ -18,7 +18,7 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   if(date_var == "Day"){ #Except for Day.
     df$YearDate <- df$Date
     df$DateTotal <- df$Total
-    df <- df[, c("YearDate", "DateTotal")]
+    df <- df[, c("YearDate", "DateTotal", "Week")]
   } else{
     df$Month <- lubridate::month(df$Date)
     df$YearDate <- paste0(lubridate::year(df$Date), df[[date_var]])
@@ -33,10 +33,9 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   if(date_var == "Month") df$Text <- month.abb[as.numeric(substr(df$YearDate, 5, nchar(df$YearDate)))]
   
   #Convert target:
-  if(date_var == "Day") target <- target/7
-  if(date_var == "Week") target <- target
-  if(date_var == "Month") target <- target*4
-  df$Target <- target #Only single value needed but passing here to avoid more args to overviewPlot.
+  if(date_var == "Day") df$Target <- target/7
+  if(date_var == "Week") df$Target <- target
+  if(date_var == "Month") df$Target <- target*4
   
   #Deal with duplicate date entries:
   cond_dupe <- duplicated(df$YearDate)
@@ -48,9 +47,23 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   df <- df[!cond_dupe, ]
   
   #Create colors:
-  df$Color <- "rgba(204, 204, 204, 1)"
-  df$Color[c(TRUE, FALSE)] <- "rgba(160, 255, 153, 1)" #Alternating colors.
-  df$BorderColor <- "rgba(0, 0, 0, 0.5)"
+  color1 <- "rgba(204, 204, 204, 1)"
+  color2 <- "rgba(160, 255, 153, 1)"
+  df$Color <- color1
+  if(date_var == "Day"){
+    curr_color <- color1
+    for(i in 2:nrow(df)){ #Same color for each week.
+      prev_week <- df$Week[i-1]
+      curr_week <- df$Week[i]
+      if(curr_week != prev_week){ #When week changes, flip color.
+        if(curr_color == color1) curr_color <- color2 else curr_color <- color1 #Flip colors.
+      }
+      df$Color[i] <- curr_color
+    }
+  } else{
+    df$Color[c(TRUE, FALSE)] <- color2 #Alternating colors.
+    df$BorderColor <- "rgba(0, 0, 0, 0.5)"
+  }
   
   #Return DF:
   return(df)
