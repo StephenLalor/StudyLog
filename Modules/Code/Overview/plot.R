@@ -21,7 +21,7 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
     df <- df[, c("YearDate", "DateTotal", "Week")]
   } else{
     df$Month <- lubridate::month(df$Date)
-    df$YearDate <- paste0(lubridate::year(df$Date), df[[date_var]])
+    df$YearDate <- paste0(lubridate::year(df$Date), sprintf("%02d", df[[date_var]]))
     df <- df %>%
       dplyr::group_by(YearDate) %>%
       dplyr::summarise("DateTotal" = sum(Total))
@@ -64,6 +64,9 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
     df$Color[c(TRUE, FALSE)] <- color2 #Alternating colors.
     df$BorderColor <- "rgba(0, 0, 0, 0.5)"
   }
+  
+  #Order by YearDate:
+  df <- df[order(as.numeric(gsub("-", "", df$YearDate))),]
   
   #Return DF:
   return(df)
