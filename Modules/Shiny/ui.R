@@ -93,7 +93,21 @@ ui <- fluidPage(
                            column(3, style = "padding:20px;", h4("Averages"), DT::dataTableOutput("sliding_avg")),
                            column(3, style = "padding:20px;", plotly::plotlyOutput("zero_pie_plot"))
                          )
-
+                ),
+                
+                #---------- Topics ----------#
+                tabPanel(type = "topics",
+                         "Topics",
+                         h2("Topics"),
+                         br(),
+                         
+                         #Overview plot row:
+                         fluidRow(
+                           h4("Topics"),
+                           plotly::plotlyOutput("topics_bar_plot"),
+                           br(),
+                           hr()
+                         )
                 )
       )
     )

@@ -73,6 +73,10 @@ server <- function(input, output){
   })
   
   #========== Topics ==========#
-  
+  output$topics_bar_plot <- plotly::renderPlotly({
+    logMsg("topics", "rendering topics barchart")
+    summary_df <- topicsData(main_df)
+    return(topicsPlot(summary_df))
+  })
     
 }

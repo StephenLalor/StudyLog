@@ -38,7 +38,7 @@ topicsPlot <- function(plot_df){
   bar_marker <- list(line = list(color = "rgba(0, 0, 0, 0.5)", width = 2.5))
   
   #Initialise plot:
-  plt <- plotly::plot_ly()
+  plt <- plotly::plot_ly(width = 1400, height = 600)
   
   #Add bars:
   plt <- plt %>%
