@@ -12,7 +12,8 @@ ui <- fluidPage(
     
     sidebarPanel(width = 3,
                  radioButtons("sel_time", "Time Period:",
-                              choices = c("Day", "Week", "Month")
+                              choices = c("Day", "Week", "Month"),
+                              selected = "Week"
                  )
     ),
     
