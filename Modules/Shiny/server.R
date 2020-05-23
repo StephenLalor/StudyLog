@@ -27,49 +27,11 @@ server <- function(input, output){
     return(overviewPlot(plot_df, input$sel_time))
   })
   
-  output$overview_tab <- DT::renderDataTable({
-    tab <- overViewTab(main_df)
-    options = list(info = FALSE)
-    return(DT::datatable(tab, options, rownames = FALSE))
-  })
-  
   #========== Stats ==========#
-  output$all_time <- DT::renderDataTable({
-    logMsg("stats", "rendering all_time table")
-    window_df <- windowSubset(main_df, input$date_range) #Subset data based on slider.
-    val <- allTimeTotal(window_df)
-    all_time_df <- data.frame("Total" = val)
-    all_time_df <- makeTall(all_time_df) #Convert to tall format.
-    options = list(info = FALSE, paging = FALSE, searching = FALSE)
-    return(DT::datatable(all_time_df, options, rownames = FALSE))
-  })
-  
-  output$good_bad <- DT::renderDataTable({
-    logMsg("stats", "rendering good_bad table")
-    window_df <- windowSubset(main_df, input$date_range) #Subset data based on slider.
-    summary_df <- switch(input$sel_time,
-                         "Day" = bestWorstDays(window_df),
-                         "Week" = bestWorstWeeks(window_df),
-                         "Month" = bestWorstMonths(window_df))
-    summary_df <- makeTall(summary_df) #Convert to tall format.
-    options = list(info = FALSE, paging = FALSE, searching = FALSE)
-    return(DT::datatable(summary_df, options, rownames = FALSE))
-  })
-  
-  output$sliding_avg <- DT::renderDataTable({
-    logMsg("stats", "rendering sliding_avg table")
-    window_df <- windowSubset(main_df, input$date_range) #Subset data based on slider.
-    summary_df <- slidingAvgs(window_df)
-    summary_df <- makeTall(summary_df) #Convert to tall format.
-    options = list(info = FALSE, paging = FALSE, searching = FALSE)
-    return(DT::datatable(summary_df, options, rownames = FALSE))
-  })
-  
-  output$zero_pie_plot <- plotly::renderPlotly({
-    logMsg("stats", "rendering zero pie plot")
-    window_df <- windowSubset(main_df, input$date_range)
-    summary_df <- bestWorstDays(window_df)
-    return(zeroPiePlot(summary_df))
+  output$alltime_plot <- plotly::renderPlotly({
+    logMsg("plot", "rendering alltime plot")
+    plot_df <- overviewPlotData(main_df, input$sel_time, 20)
+    return(allTimePlot(plot_df))
   })
   
   #========== Topics ==========#

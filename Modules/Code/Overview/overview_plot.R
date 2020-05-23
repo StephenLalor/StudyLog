@@ -64,6 +64,10 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
     df$BorderColor <- "rgba(0, 0, 0, 0.5)"
   }
   
+  #Add cumulative sums:
+  df$cumul_total <- cumsum(df$DateTotal)
+  df$cumul_target <- cumsum(df$Target)
+  
   #Order by YearDate:
   df <- df[order(as.numeric(gsub("-", "", df$YearDate))),]
   
@@ -113,15 +117,4 @@ overviewPlot <- function(plot_df, date_var){
   #Return plot:
   return(plt)
   
-}
-
-#========== Table ==========#
-
-overViewTab <- function(df){
-  #' Overview Table
-  #' 
-  #' Create table of main data.
-  #' @param df data.frame
-  #' @return data.table data.frame
-  return(data.table::as.data.table(df))
 }
