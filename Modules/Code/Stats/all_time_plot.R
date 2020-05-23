@@ -37,7 +37,7 @@ allTimePlot <- function(plot_df){
   
   #Add layout:
   xaxis_layout = list(title = "Date")
-  yaxis_layout = list(title = "Hours")
+  yaxis_layout = list(title = "Hours", categoryorder = "array", categoryarray = plot_df$YearDate)
   plt <- plt %>%
     plotly::layout(title = "Cumulative Hours",
                    xaxis = xaxis_layout,

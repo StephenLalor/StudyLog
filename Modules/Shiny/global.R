@@ -20,3 +20,4 @@ main_df <- readLog(paths)
 checkDuplicateEntry(main_df)
 topic_choices <- genChoices(main_df)
 sys_date <- getDate()
+target <- 20

@@ -84,7 +84,7 @@ ui <- fluidPage(
                          
                          #Overview plot row:
                          fluidRow(
-                           h4("Topics"),
+                           h4("Total Time By Topic"),
                            plotly::plotlyOutput("topics_bar_plot"),
                            br(),
                            hr()

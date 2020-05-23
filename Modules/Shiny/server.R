@@ -23,14 +23,14 @@ server <- function(input, output){
   #========== Overview ==========#
   output$overview_plot <- plotly::renderPlotly({
     logMsg("plot", "rendering overview plot")
-    plot_df <- overviewPlotData(main_df, input$sel_time, 20)
+    plot_df <- overviewPlotData(main_df, input$sel_time, target)
     return(overviewPlot(plot_df, input$sel_time))
   })
   
   #========== Stats ==========#
   output$alltime_plot <- plotly::renderPlotly({
     logMsg("plot", "rendering alltime plot")
-    plot_df <- overviewPlotData(main_df, input$sel_time, 20)
+    plot_df <- overviewPlotData(main_df, input$sel_time, target)
     return(allTimePlot(plot_df))
   })
   

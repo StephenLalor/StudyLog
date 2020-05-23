@@ -108,7 +108,7 @@ overviewPlot <- function(plot_df, date_var){
   
   #Add layout:
   yaxis_layout = list(title = "Hours")
-  xaxis_layout = list(title = paste0("Year", date_var))
+  xaxis_layout = list(title = paste0("Year", date_var), categoryorder = "array", categoryarray = plot_df$YearDate)
   plt <- plt %>%
     plotly::layout(title = "Study Hours",
                    xaxis = xaxis_layout,
