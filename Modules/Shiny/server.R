@@ -34,6 +34,16 @@ server <- function(input, output){
   })
   
   #========== Stats ==========#
+  output$all_time <- DT::renderDataTable({
+    logMsg("stats", "rendering all_time table")
+    window_df <- windowSubset(main_df, input$date_range) #Subset data based on slider.
+    val <- allTimeTotal(window_df)
+    all_time_df <- data.frame("Total" = val)
+    all_time_df <- makeTall(all_time_df) #Convert to tall format.
+    options = list(info = FALSE, paging = FALSE, searching = FALSE)
+    return(DT::datatable(all_time_df, options, rownames = FALSE))
+  })
+  
   output$good_bad <- DT::renderDataTable({
     logMsg("stats", "rendering good_bad table")
     window_df <- windowSubset(main_df, input$date_range) #Subset data based on slider.
@@ -61,5 +71,8 @@ server <- function(input, output){
     summary_df <- bestWorstDays(window_df)
     return(zeroPiePlot(summary_df))
   })
+  
+  #========== Topics ==========#
+  
     
 }

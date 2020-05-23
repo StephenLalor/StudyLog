@@ -82,6 +82,11 @@ ui <- fluidPage(
                                            width = "90%"),
                            hr()),
                          
+                         #All time section:
+                         fluidRow(
+                           column(3, style = "padding:20px;", h4("All Time"), DT::dataTableOutput("all_time"))
+                         ),
+                         
                          #Good and bad section:
                          fluidRow(
                            column(3, style = "padding:20px;", h4("The Good and Bad"), DT::dataTableOutput("good_bad")),
