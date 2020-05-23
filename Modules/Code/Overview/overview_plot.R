@@ -47,21 +47,20 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   df <- df[!cond_dupe, ]
   
   #Create colors:
-  color1 <- "rgba(204, 204, 204, 1)"
-  color2 <- "rgba(160, 255, 153, 1)"
-  df$Color <- color1
+  pal <- RColorBrewer::brewer.pal(n = 8, name = "Dark2")
+  df$Color <- pal[5]
   if(date_var == "Day"){
-    curr_color <- color1
+    curr_color <- pal[5]
     for(i in 2:nrow(df)){ #Same color for each week.
       prev_week <- df$Week[i-1]
       curr_week <- df$Week[i]
       if(curr_week != prev_week){ #When week changes, flip color.
-        if(curr_color == color1) curr_color <- color2 else curr_color <- color1 #Flip colors.
+        if(curr_color == pal[5]) curr_color <- pal[8] else curr_color <- pal[5] #Flip colors.
       }
       df$Color[i] <- curr_color
     }
   } else{
-    df$Color[c(TRUE, FALSE)] <- color2 #Alternating colors.
+    df$Color[c(TRUE, FALSE)] <- pal[8] #Alternating colors.
     df$BorderColor <- "rgba(0, 0, 0, 0.5)"
   }
   

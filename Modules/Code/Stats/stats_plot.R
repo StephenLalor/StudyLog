@@ -156,9 +156,10 @@ zeroPiePlot <- function(df){
   logMsg("function", "running zeroPiePlot()")
   
   #Plot setup:
+  pal <- RColorBrewer::brewer.pal(n = 8, name = "Dark2")
   pie_df <- data.frame(ZeroDaysProp = c(df$ZeroDaysProp, 1-df$ZeroDaysProp),
                        ZeroDays = c(df$ZeroDays, df$NumberDays - df$ZeroDays),
-                       Color = c("red", "green"))
+                       Color = c(pal[2], pal[5]))
   pie_df$Text <- c("Zero Days", "Work Days")
   pie_df$Label <- pie_df$ZeroDays #Using this as label to access it in hovertemplate.
   marker_spec <- list(colors = pie_df$Color,
