@@ -1,5 +1,5 @@
 #======================================================================#
-####                    Stats Data
+####                    Stats Plots
 #======================================================================#
 
 #========== Divide Data ==========#
@@ -79,7 +79,7 @@ bestWorstDays <- function(window_df){
                    BestWeekDayDate = window_df$Date[!cond_weekend][cond_best_weekday],
                    BestWeekendDay = window_df$Total[cond_weekend][cond_best_weekend_day],
                    BestWeekendDayDate = window_df$Date[cond_weekend][cond_best_weekend_day])
-
+  
   return(df)
 }
 
@@ -107,7 +107,7 @@ bestWorstWeeks <- function(window_df){
                    BestWeekDate = window_df$YearWeek[cond_best_week],
                    WorstWeek = window_df$WeekTotal[cond_worst_week],
                    WorstWeekDate = window_df$YearWeek[cond_worst_week])
-
+  
   return(df)
 }
 
@@ -135,7 +135,7 @@ bestWorstMonths <- function(window_df){
   #Define conditions:
   cond_best_month <- which.max(window_df$MonthTotal)
   cond_worst_month <- which.min(window_df$MonthTotal)
-
+  
   #Create summary DF:
   df <- data.frame(BestMonth = window_df$MonthTotal[cond_best_month],
                    BestMonthName = window_df$MonthName[cond_best_month],
@@ -143,4 +143,44 @@ bestWorstMonths <- function(window_df){
                    WorstMonthName = window_df$MonthName[cond_worst_month])
   
   return(df)
+}
+
+#========== Pie Plot ==========#
+
+zeroPiePlot <- function(df){
+  #' Bests And Worsts
+  #' 
+  #' Calculate best and worst week records.
+  #' @param df data.frame
+  #' @return plotly htmlwidget
+  logMsg("function", "running zeroPiePlot()")
+  
+  #Plot setup:
+  pie_df <- data.frame(ZeroDaysProp = c(df$ZeroDaysProp, 1-df$ZeroDaysProp),
+                       ZeroDays = c(df$ZeroDays, df$NumberDays - df$ZeroDays),
+                       Color = c("red", "green"))
+  pie_df$Text <- c("Zero Days", "Work Days")
+  pie_df$Label <- pie_df$ZeroDays #Using this as label to access it in hovertemplate.
+  marker_spec <- list(colors = pie_df$Color,
+                      line = list(color = '#FFFFFF', width = 1))
+  hover_template <- paste("<b>%{text}</b>: %{label}", #Can only use plot data objects here.
+                          "<br><b>Percentage</b>: %{percent}</br>")
+  
+  #Initialise plot:
+  plt <- plotly::plot_ly()
+  
+  #Add pie:
+  plt <- plotly::plot_ly() %>%
+    plotly::add_pie(values = pie_df$ZeroDaysProp,
+                    labels = pie_df$Label,
+                    text = pie_df$Text,
+                    marker = marker_spec,
+                    hovertemplate = hover_template)
+  
+  #Add layout:
+  plt <- plt %>%
+    plotly::layout(showlegend = FALSE,
+                   title = "Zero Days")
+  
+  return(plt)
 }
