@@ -69,7 +69,7 @@ ui <- fluidPage(
                          
                          #Alltime plot row:
                          fluidRow(
-                           h4("All Time"),
+                           h4("Cumulative Time"),
                            plotly::plotlyOutput("alltime_plot"),
                            br(),
                            hr()

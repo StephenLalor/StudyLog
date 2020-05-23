@@ -33,10 +33,7 @@ topicsPlot <- function(plot_df){
   #' @param plot_df data.frame
   #' @return plotly htmlwidget
   logMsg("function", "running topicsPlot()")
-  
-  #Define bar styling:
-  bar_marker <- list(line = list(color = "rgba(0, 0, 0, 0.5)", width = 2.5))
-  
+
   #Initialise plot:
   plt <- plotly::plot_ly(width = 1400, height = 600)
   
@@ -44,7 +41,6 @@ topicsPlot <- function(plot_df){
   plt <- plt %>%
     plotly::add_trace(x = plot_df$Topic, y = plot_df$sum_total,
                       name = "Hours", type = "bar",
-                      marker = bar_marker,
                       color = plot_df$Topic,
                       colors = "Dark2")
   
