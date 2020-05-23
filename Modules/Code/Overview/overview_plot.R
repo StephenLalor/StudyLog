@@ -35,7 +35,7 @@ overviewPlotData <- function(df, date_var = c("Day", "Week", "Month"), target){
   #Convert target:
   if(date_var == "Day") df$Target <- target/7
   if(date_var == "Week") df$Target <- target
-  if(date_var == "Month") df$Target <- target*4
+  if(date_var == "Month") df$Target <- target*4.348125
   
   #Deal with duplicate date entries:
   cond_dupe <- duplicated(df$YearDate)
